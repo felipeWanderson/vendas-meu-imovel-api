@@ -1,0 +1,25 @@
+{
+  "name": "vendas-meu-imovel-api",
+  "version": "1.0.0",
+  "description": "ERP MEU IMOVEL",
+  "main": "server.js",
+  "dependencies": {
+    "fastify": "^4.26.2"
+  },
+  "scripts": {
+    "start:dev": "tsx watch src/server.ts",
+    "start": "node build/server.js",
+    "build": "tsup src --out-dir build",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "husky": "^9.0.11",
+    "tsup": "^8.0.2",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
+  }
+}
