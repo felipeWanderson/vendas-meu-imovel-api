@@ -1,0 +1,37 @@
+ App
+
+GymPass style app.
+
+## RFs (Requisitos funcionais)
+
+- [ ] Deve ser possível se cadastrar;
+- [ ] Deve ser possível se autenticar;
+- [ ] Deve ser possível obter o perfil de um usuário logado;
+- [ ] Deve ser possível o usuario cadastrar uma ficha de venda;
+- [ ] Deve ser possível o usuário obter o seu histórico de vendas;
+- [ ] Deve ser possível o usuário editar a ficha de vendas;
+- [ ] Deve ser possível o usuário vizualizar um ranking de vendas;
+- [ ] Deve ser possivel cadastrar uma contrutora
+- [ ] Deve ser possivel editar uma contrutora
+- [ ] Deve ser possivel obter uma contrutora
+- [ ] Deve ser possivel obter uma lista de contrutora
+- [ ] Deve ser possivel o usuário baixar um relatorio de vendas
+- [ ] Deve ser possivel o usuário ver um dashboard com metricas de vendas
+
+## RNs (Regras de negócio)
+
+- [ ] O usuário não deve poder se cadastrar com um e-mail duplicado;
+- [ ] Somente usuários do tipo adminstrados podem criar/desativar usuarios.
+- [ ] Somente usuários do tipo adminstrados podem criar/editar/desativar contrutoras.
+- [ ] Somente usuários do tipo administrador/gerente podem validar uma ficha de venda.
+- [ ] O ranking so sera gerado com as vendas que foram validadas.
+- [ ] Somente o usuario do tipo adminstrador poderá baixar relatorios
+- [ ] Depois de validado a venda, somente o usuário administrador poderá mudar o status da venda
+
+## RNFs (Requisitos não-funcionais)
+
+- [ ] A senha do usuário precisa estar criptografada;
+- [ ] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
+- [ ] Todas listas de dados precisam estar paginadas com 20 itens por página;
+- [ ] O usuário deve ser identificado por um JWT (JSON Web Token);
+- [ ] todos os relatórios devem ser em excel.
