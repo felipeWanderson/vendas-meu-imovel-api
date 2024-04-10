@@ -4,7 +4,9 @@
   "description": "ERP MEU IMOVEL",
   "main": "server.js",
   "dependencies": {
-    "fastify": "4.26.2"
+    "dotenv": "16.4.5",
+    "fastify": "4.26.2",
+    "zod": "3.22.4"
   },
   "scripts": {
     "start:dev": "tsx watch src/server.ts",
