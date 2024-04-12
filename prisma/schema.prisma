@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  REALTOR
+  MANAGER
+}
+
+enum StatusSale {
+  SUBIMITTED
+  VALIDATED
+  PROCESSING
+  CONCLUDED
+  FAILED
+}
+
+enum UserSaleRole {
+  SELLER
+  PICKUP
+  MANAGER
+}
+
+enum ClientSaleRole {
+  SELLER
+  BUYER
+}
+
+model User {
+  id            String     @id @default(uuid())
+  first_name    String
+  last_name     String
+  email         String     @unique
+  roles         UserRole[]
+  is_ranking    Boolean    @default(false)
+  password_hash String
+  avatar_url    String?
+  sales         SaleUser[]
+
+  @@map("users")
+}
+
+model Builder {
+  id       String @id @default(uuid())
+  name     String
+  document String @unique
+  sales    Sale[]
+
+  @@map("builders")
+}
+
+model Client {
+  id       String       @id @default(uuid())
+  name     String
+  document String       @unique
+  sales    SaleClient[]
+
+  @@map("clients")
+}
+
+model Sale {
+  id           String       @id @default(uuid())
+  status       StatusSale
+  immobile     String
+  unity        String
+  amount       BigInt
+  date_sale    DateTime
+  act          BigInt
+  pay_date_act DateTime
+  negotiation  Json
+  builder      Builder?     @relation(fields: [builder_id], references: [id])
+  builder_id   String?
+  users        SaleUser[]
+  clients      SaleClient[]
+  created_at   DateTime     @default(now())
+
+  @@map("sales")
+}
+
+model SaleUser {
+  User    User         @relation(fields: [user_id], references: [id])
+  user_id String
+  sale    Sale         @relation(fields: [sale_id], references: [id])
+  sale_id String
+  role    UserSaleRole
+
+  @@id([sale_id, user_id])
+  @@map("sales_users")
+}
+
+model SaleClient {
+  sale      Sale           @relation(fields: [sale_id], references: [id])
+  sale_id   String
+  role      ClientSaleRole
+  Client    Client         @relation(fields: [client_id], references: [id])
+  client_id String
+
+  @@id([sale_id, client_id])
+  @@map("sales_clients")
+}
