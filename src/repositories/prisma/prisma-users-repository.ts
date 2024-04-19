@@ -3,14 +3,28 @@ import { Prisma } from '@prisma/client'
 import { UsersRepository } from '../users-repository'
 
 export class PrismaUsersRepository implements UsersRepository {
-  async update(id: string, data: Prisma.UserUpdateInput): Promise<void> {
-    await prisma.user.update({
+  async delete(id: string) {
+    const user = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        active: false,
+      },
+    })
+
+    return user
+  }
+
+  async update(id: string, data: Prisma.UserUpdateInput) {
+    const user = await prisma.user.update({
       where: {
         id,
       },
       data,
     })
-    throw new Error('Method not implemented.')
+
+    return user
   }
 
   async findById(id: string) {
