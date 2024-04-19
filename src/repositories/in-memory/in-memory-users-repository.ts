@@ -5,6 +5,19 @@ import { randomUUID } from 'node:crypto'
 export class InMemoryUsersRepository implements UsersRepository {
   public items: User[] = []
 
+  async update(id: string, data: Prisma.UserUpdateInput) {
+    const userIndex = this.items.findIndex((item) => item.id === id)
+    const user = this.items[userIndex]
+    const updatedUser = {
+      ...user,
+      ...data,
+    } as User
+
+    this.items[userIndex] = updatedUser
+
+    return updatedUser
+  }
+
   async findById(id: string) {
     const user = this.items.find((item) => item.id === id)
 
