@@ -6,6 +6,7 @@
   "dependencies": {
     "@prisma/client": "5.12.1",
     "bcryptjs": "2.4.3",
+    "date-fns": "3.6.0",
     "dotenv": "16.4.5",
     "fastify": "4.26.2",
     "vite-tsconfig-paths": "4.3.2",
