@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto'
-import { BuilderRepository } from '../builders-repository'
+import { BuilderRepository, QueriesBuider } from '../builders-repository'
 import { Builder, Prisma } from '@prisma/client'
 
 export class InMemoryBuildersRepository implements BuilderRepository {
@@ -22,10 +22,21 @@ export class InMemoryBuildersRepository implements BuilderRepository {
     return builder
   }
 
-  async findMany(query: string, page: number) {
-    return this.builders
-      .filter((item) => item.name.includes(query))
-      .slice((page - 1) * 20, page * 20)
+  async findMany(query: QueriesBuider, page: number) {
+    const { name, document } = query
+    if (name) {
+      return this.builders
+        .filter((item) => item.name.includes(name))
+        .slice((page - 1) * 20, page * 20)
+    }
+
+    if (document) {
+      return this.builders
+        .filter((item) => item.document.includes(document))
+        .slice((page - 1) * 20, page * 20)
+    }
+
+    return this.builders.slice((page - 1) * 20, page * 20)
   }
 
   async create(data: Prisma.BuilderCreateInput) {
