@@ -48,13 +48,24 @@ model User {
 }
 
 model Builder {
-  id       String  @id @default(uuid())
+  id       String     @id @default(uuid())
   name     String
-  document String  @unique
-  sales    Sale[]
-  active   Boolean @default(true)
+  document String     @unique
+  active   Boolean    @default(true)
+  Property Property[]
 
   @@map("builders")
+}
+
+model Property {
+  id         String   @id @default(uuid())
+  name       String
+  address    Json
+  builder    Builder? @relation(fields: [builder_id], references: [id])
+  builder_id String?
+  Sale       Sale[]
+
+  @@map("properties")
 }
 
 model Client {
@@ -68,20 +79,20 @@ model Client {
 }
 
 model Sale {
-  id           String       @id @default(uuid())
-  status       StatusSale
-  immobile     String
-  unity        String
-  amount       BigInt
-  date_sale    DateTime
-  act          BigInt
-  pay_date_act DateTime
-  negotiation  Json
-  builder      Builder?     @relation(fields: [builder_id], references: [id])
-  builder_id   String?
-  users        SaleUser[]
-  clients      SaleClient[]
-  created_at   DateTime     @default(now())
+  id                String       @id @default(uuid())
+  status            StatusSale
+  single_property   String?
+  plant_property    Property?    @relation(fields: [plant_property_id], references: [id])
+  plant_property_id String?
+  unity             String
+  amount            BigInt
+  date_sale         DateTime
+  act               BigInt
+  pay_date_act      DateTime
+  negotiation       Json
+  users             SaleUser[]
+  clients           SaleClient[]
+  created_at        DateTime     @default(now())
 
   @@map("sales")
 }
