@@ -63,6 +63,7 @@ model Property {
   address    Json
   builder    Builder? @relation(fields: [builder_id], references: [id])
   builder_id String?
+  active     Boolean  @default(true)
   Sale       Sale[]
 
   @@map("properties")
