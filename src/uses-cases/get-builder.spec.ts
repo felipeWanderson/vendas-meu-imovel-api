@@ -7,7 +7,7 @@ import { BuilderNotExistsError } from './errors/builder-not-exists-error'
 let buildersRepository: InMemoryBuildersRepository
 let sut: GetBuilderUseCase
 
-describe('Get User Use Case', () => {
+describe('Get Builder Use Case', () => {
   beforeEach(() => {
     buildersRepository = new InMemoryBuildersRepository()
     sut = new GetBuilderUseCase(buildersRepository)
@@ -23,7 +23,7 @@ describe('Get User Use Case', () => {
 
     expect(builder.id).toEqual(createdBuilder.id)
   })
-  it('should not be able to get user if builder not exists', async () => {
+  it('should not be able to get builder if builder not exists', async () => {
     const userId = randomUUID()
 
     await expect(() =>
