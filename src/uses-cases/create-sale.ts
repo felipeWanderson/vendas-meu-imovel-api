@@ -7,7 +7,8 @@ import {
 import { Prisma } from '@prisma/client'
 
 interface CreateSaleCaseRequest {
-  immobile: string
+  single_property?: string
+  plant_property_id?: string;
   unity: string
   amount: bigint | number
   date_sale: Date | string
@@ -16,7 +17,6 @@ interface CreateSaleCaseRequest {
   negotiation: Prisma.InputJsonValue
   users: User[]
   clients: Client[]
-  builder?: string
 }
 
 interface CreateSaleCaseResponse {
@@ -27,7 +27,6 @@ export class CreateSaleUseCase {
   constructor(private salesRepository: SalesRepository) {}
 
   async execute({
-    immobile,
     act,
     amount,
     date_sale,
@@ -36,7 +35,7 @@ export class CreateSaleUseCase {
     unity,
     clients,
     users,
-    builder,
+    single_property
   }: CreateSaleCaseRequest): Promise<CreateSaleCaseResponse> {
     const salesUsers = users.map((user) => {
       return {
@@ -53,14 +52,13 @@ export class CreateSaleUseCase {
 
     const sale = await this.salesRepository.create({
       status: 'SUBIMITTED',
-      immobile,
+      single_property,
       act,
       amount,
       date_sale,
       negotiation,
       pay_date_act,
       unity,
-      builder_id: builder,
       users: {
         create: salesUsers,
       },
