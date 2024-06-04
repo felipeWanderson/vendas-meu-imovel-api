@@ -48,11 +48,11 @@ model User {
 }
 
 model Builder {
-  id       String     @id @default(uuid())
-  name     String
-  document String     @unique
-  active   Boolean    @default(true)
-  Property Property[]
+  id         String     @id @default(uuid())
+  name       String
+  document   String     @unique
+  active     Boolean    @default(true)
+  properties Property[]
 
   @@map("builders")
 }
@@ -64,7 +64,7 @@ model Property {
   builder    Builder? @relation(fields: [builder_id], references: [id])
   builder_id String?
   active     Boolean  @default(true)
-  Sale       Sale[]
+  sales      Sale[]
 
   @@map("properties")
 }

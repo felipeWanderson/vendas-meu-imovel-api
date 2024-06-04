@@ -5,8 +5,8 @@ import {
 } from '@/repositories/builders-repository'
 
 interface SearchBuildersUseCaseRequest {
-  query: QueriesBuider
-  page: number
+  query?: QueriesBuider
+  page?: number
 }
 
 interface SearchBuildersrUseCaseResponse {
