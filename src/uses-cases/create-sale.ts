@@ -35,7 +35,8 @@ export class CreateSaleUseCase {
     unity,
     clients,
     users,
-    single_property
+    single_property,
+    plant_property_id
   }: CreateSaleCaseRequest): Promise<CreateSaleCaseResponse> {
     const salesUsers = users.map((user) => {
       return {
@@ -53,6 +54,7 @@ export class CreateSaleUseCase {
     const sale = await this.salesRepository.create({
       status: 'SUBIMITTED',
       single_property,
+      plant_property_id,
       act,
       amount,
       date_sale,

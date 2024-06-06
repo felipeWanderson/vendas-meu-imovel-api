@@ -13,7 +13,7 @@ export interface Client {
   role: ClientSaleRole
   client_id: string
 }
-export interface CreateSaleInput extends Prisma.SaleUncheckedUpdateInput {
+export interface CreateSaleInput extends Prisma.SaleUncheckedCreateInput {
   users?: Prisma.SaleUserCreateNestedManyWithoutSaleInput
   clients?: Prisma.SaleClientCreateNestedManyWithoutSaleInput
 }
