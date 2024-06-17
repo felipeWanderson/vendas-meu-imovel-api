@@ -11,10 +11,10 @@ export async function createSaleUsed(request: FastifyRequest, reply: FastifyRepl
     amount: z.bigint().or(z.number()),
     date_sale: z.date().or(z.string()),
     act:  z.bigint().or(z.number()),
-    pay_date_act: z.date().or(z.string()),
+    pay_date_act: z.date().or(z.string()).optional(),
     negotiation: z.object({
       description: z.string(),
-    }),
+    }).optional(),
     users: z.array( z.object({
       role: z.enum([UserSaleRole.MANAGER, UserSaleRole.PICKUP, UserSaleRole.SELLER]),
       user_id: z.string().uuid(),

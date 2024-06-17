@@ -13,8 +13,8 @@ interface CreateSaleCaseRequest {
   amount: bigint | number
   date_sale: Date | string
   act: bigint | number
-  pay_date_act: Date | string
-  negotiation: Prisma.InputJsonValue
+  pay_date_act?: Date | string
+  negotiation?: Prisma.InputJsonValue
   users: User[]
   clients: Client[]
 }

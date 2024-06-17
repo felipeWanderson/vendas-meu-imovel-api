@@ -89,8 +89,9 @@ model Sale {
   amount            BigInt
   date_sale         DateTime
   act               BigInt
-  pay_date_act      DateTime
-  negotiation       Json
+  pay_date_act      DateTime?
+  negotiation       Json?
+  fall_motive       String?
   users             SaleUser[]
   clients           SaleClient[]
   created_at        DateTime     @default(now())
