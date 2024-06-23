@@ -21,10 +21,10 @@ export async function createProperty(request: FastifyRequest, reply: FastifyRepl
     })
   })
 
-  const { name, address, builder_id } =
-  createPropertyBodySchema.parse(request.body)
 
   try {
+    const { name, address, builder_id } =
+    createPropertyBodySchema.parse(request.body)
     const createPropertyUseCase = makeCreatePropertyUseCase()
 
     const { property } = await createPropertyUseCase.execute({
