@@ -1,5 +1,6 @@
 import { QueriesSales } from '@/repositories/sales-repository'
 import { makeSearchSalesUseCase } from '@/uses-cases/factories/sale/make-search-sale-use-case'
+import { serializeSale } from '@/utils'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -32,11 +33,12 @@ export async function listSales(request: FastifyRequest, reply: FastifyReply) {
 
     const {sales} = await searchSalesUseCase.execute({ page, query })
     
+    const listSales = sales.map(sale => serializeSale(sale))
     
     return reply
       .status(200)
       .send({
-        sales
+        sales: listSales
       })
   } catch (error) {
     throw error
