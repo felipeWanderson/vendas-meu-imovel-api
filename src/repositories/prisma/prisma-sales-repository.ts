@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { CreateSaleInput, QueriesSales, SalesRepository } from "../sales-repository";
+import { CreateSaleInput, QueriesSales, SalesRepository, UpdateSale } from "../sales-repository";
 import { Prisma } from "@prisma/client";
 
 export class PrismaSalesRepository implements SalesRepository {
@@ -76,15 +76,15 @@ export class PrismaSalesRepository implements SalesRepository {
   })
     return sales;
   }
-  async update(id: string, data: Prisma.SaleUncheckedUpdateInput) {
-    const sale = await prisma.sale.update({
-      where: {
-        id,
-      },
+  async update(id: string, data: Prisma.SaleUpdateInput){
+    return prisma.sale.update({
+      where: { id },
       data,
-    })
-
-    return sale
+      include: {
+        users: true,
+        clients: true,
+      },
+    });
   }
   async delete(id: string) {
     const sale = await prisma.sale.update({

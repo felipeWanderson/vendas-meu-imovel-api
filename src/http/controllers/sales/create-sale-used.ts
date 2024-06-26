@@ -1,9 +1,8 @@
 import { makeCreateSaleUseCase } from '@/uses-cases/factories/sale/make-create-sale-use-case'
 import { ClientSaleRole, UserSaleRole } from '@prisma/client'
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { format, parseISO } from 'date-fns';
 import { z } from 'zod'
-import { convertToCents, formatPrismaPayloadCreateSale, serializeSale } from '@/utils';
+import {formatPrismaPayloadCreateSale, serializeSale } from '@/utils';
 
 const createSaleBodySchema = z.object({
   single_property: z.string(),
