@@ -86,13 +86,14 @@ export class PrismaSalesRepository implements SalesRepository {
       },
     });
   }
-  async delete(id: string) {
+  async delete(id: string, fall_motive: string) {
     const sale = await prisma.sale.update({
       where: {
         id,
       },
       data: {
-        status: "FAILED"
+        status: "FAILED",
+        fall_motive
       },
     })
 

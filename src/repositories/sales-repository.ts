@@ -52,5 +52,5 @@ export interface SalesRepository {
   findById(id: string): Promise<Sale | null>
   findMany(query: QueriesSales, page: number): Promise<Sale[]>
   update(id: string, data: Prisma.SaleUpdateInput): Promise<Sale>;
-  delete(id: string): Promise<Sale>
+  delete(id: string, fall_motive: string): Promise<Sale>
 }
