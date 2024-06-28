@@ -8,6 +8,7 @@ import { builderRoutes } from './http/controllers/builders/routes'
 import { EXPIRES_IN_ACCESS_TOKEN_IN_TEXT } from './constants'
 import { propertiesRoutes } from './http/controllers/properties/routes'
 import { salesRoutes } from './http/controllers/sales/routes'
+import { clientsRoutes } from './http/controllers/clients/routes'
 const EXPIRESIN_IN_MILLISECONDS = 1 * 60000 // 1 minute
 export const app = fastify()
 
@@ -26,6 +27,7 @@ app.register(userRoutes)
 app.register(builderRoutes)
 app.register(propertiesRoutes)
 app.register(salesRoutes)
+app.register(clientsRoutes)
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
