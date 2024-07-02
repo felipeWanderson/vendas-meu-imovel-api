@@ -1,9 +1,10 @@
 import { prisma } from "@/lib/prisma";
-import { CreateSaleInput, QueriesSales, SalesRepository, UpdateSale } from "../sales-repository";
+import { CreateSaleInput, QueriesSales, SalesRepository } from "../sales-repository";
 import { Prisma } from "@prisma/client";
 
 export class PrismaSalesRepository implements SalesRepository {
-  async findById(id: string) {
+  
+async findById(id: string) {
     const sale = await prisma.sale.findUnique({
       where: {
         id
@@ -106,5 +107,4 @@ export class PrismaSalesRepository implements SalesRepository {
 
     return sale
   }
-
 }
