@@ -9,8 +9,17 @@ import { EXPIRES_IN_ACCESS_TOKEN_IN_TEXT } from './constants'
 import { propertiesRoutes } from './http/controllers/properties/routes'
 import { salesRoutes } from './http/controllers/sales/routes'
 import { clientsRoutes } from './http/controllers/clients/routes'
+import fastifyCors from '@fastify/cors'
 const EXPIRESIN_IN_MILLISECONDS = 1 * 60000 // 1 minute
 export const app = fastify()
+
+app.register(fastifyCors, {
+  origin: '*',
+  methods: ['GET', 'PUT', 'POST', 'PATCH','DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  maxAge: 86400, 
+});
 
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
