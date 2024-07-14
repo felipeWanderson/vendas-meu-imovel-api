@@ -36,7 +36,8 @@ export async function refresh(request: FastifyRequest, reply: FastifyReply) {
     .status(200)
     .send({
       token,
-      expiresIn: EXPIRES_IN_ACCESS_TOKEN_IN
+      expiresIn: EXPIRES_IN_ACCESS_TOKEN_IN,
+      refreshToken
     })
  } catch (err) {
   return reply.status(401).send({ message: 'Unauthorized.' })

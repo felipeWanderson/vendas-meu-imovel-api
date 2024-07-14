@@ -50,6 +50,7 @@ export async function authenticate(request: FastifyRequest, reply: FastifyReply)
       .send({
         token,
         expiresIn: EXPIRES_IN_ACCESS_TOKEN_IN,
+        refreshToken
       })
   } catch (error) {
     if (error instanceof InvalidCredentialsError) {
