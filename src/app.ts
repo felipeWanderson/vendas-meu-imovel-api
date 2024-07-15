@@ -10,13 +10,14 @@ import { propertiesRoutes } from './http/controllers/properties/routes'
 import { salesRoutes } from './http/controllers/sales/routes'
 import { clientsRoutes } from './http/controllers/clients/routes'
 import fastifyCors from '@fastify/cors'
+import { rankingRoutes } from './http/controllers/ranking/routes'
 const EXPIRESIN_IN_MILLISECONDS = 1 * 60000 // 1 minute
 export const app = fastify()
 
 app.register(fastifyCors, {
   origin: '*',
   methods: ['GET', 'PUT', 'POST', 'PATCH','DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-skip-interceptor'],
   credentials: true,
   maxAge: 86400, 
 });
@@ -37,6 +38,7 @@ app.register(builderRoutes)
 app.register(propertiesRoutes)
 app.register(salesRoutes)
 app.register(clientsRoutes)
+app.register(rankingRoutes)
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
