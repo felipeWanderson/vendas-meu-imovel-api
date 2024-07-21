@@ -17,6 +17,7 @@ export class PrismaRankingRepository implements RankingRepository {
         first_name: true,
         last_name: true,
         is_ranking: true,
+        avatar_url: true,
         sales: {
           where: {
             role: "SELLER",

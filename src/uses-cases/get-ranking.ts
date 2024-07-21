@@ -36,6 +36,7 @@ export class GetRanking {
     const formmatedSales = sales.map(user => ({
       id: user.id,
       name: `${user.first_name} ${user.last_name}`,
+      avatar_url: user.avatar_url,
       is_ranking: user.is_ranking,
       amount:user?.sales?.reduce((acc, sale) => {
         const value = acc += Number(sale.sale.amount);
@@ -54,7 +55,8 @@ export class GetRanking {
       position: `${index + 1}°`,
       name: user.name,
       vgv: user.amount,
-      vgvFormatted: user.amountFormatted
+      vgvFormatted: user.amountFormatted,
+      avatarUrl: user.avatar_url
     }))
 
     return ranking;

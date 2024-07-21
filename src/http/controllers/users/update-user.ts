@@ -12,10 +12,11 @@ export async function updateUser(request: FastifyRequest, reply: FastifyReply) {
   const updateUserBodySchema = z.object({
     first_name: z.string().optional(),
     last_name: z.string().optional(),
-    password: z.string().min(6),
+    password: z.string().min(6).optional(),
     roles: z.string().array().optional(),
     email: z.string().email().optional(),
     is_ranking: z.boolean().optional(),
+    avatar_url: z.string().url().optional()
   })
 
   const body =
@@ -32,6 +33,7 @@ export async function updateUser(request: FastifyRequest, reply: FastifyReply) {
       is_ranking: body.is_ranking,
       password: body.password,
       roles: body.roles?.map((role) => role as userRole),
+      avatar_url: body.avatar_url
     }})
 
     return reply.status(204).send()

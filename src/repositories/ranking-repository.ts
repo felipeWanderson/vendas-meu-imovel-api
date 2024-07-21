@@ -3,6 +3,7 @@ export type UserWithSales = {
   first_name: string;
   last_name: string;
   is_ranking: boolean;
+  avatar_url: string | null;
   sales: {
       sale: {
           amount: bigint;

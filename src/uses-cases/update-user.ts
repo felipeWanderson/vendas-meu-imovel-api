@@ -12,6 +12,7 @@ interface UpdateUserUseCaseRequest {
     password?: string
     roles?: userRole[]
     is_ranking?: boolean
+    avatar_url?: string
   }
 }
 
@@ -42,6 +43,7 @@ export class UpdateUserUseCase {
       email: data?.email,
       roles: data?.roles,
       is_ranking: data?.is_ranking,
+      avatar_url: data?.avatar_url,
     }
 
     const updateUser = await this.usersRepository.update(id, payloadUpdate)
