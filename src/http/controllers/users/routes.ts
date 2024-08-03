@@ -8,6 +8,7 @@ import { logout } from './logout'
 import { verifyToken } from './verify'
 import { updateUser } from './update-user'
 import { verifyUserRole } from '@/http/middlewares/verify-user-roles'
+import { getUsersByRole } from './get-users-by-role'
 
 
 export async function userRoutes(app: FastifyInstance) {
@@ -21,4 +22,5 @@ export async function userRoutes(app: FastifyInstance) {
   app.get('/me', { onRequest: [verifyJwt] }, GetProfile)
   app.put('/update/:id',{ onRequest: [verifyJwt] }, updateUser)
   app.delete('/desactivate/:id', { onRequest: [verifyJwt, verifyUserRole('ADMIN')] }, updateUser)
+  app.get('/users', { onRequest: [verifyJwt] }, getUsersByRole)
 }

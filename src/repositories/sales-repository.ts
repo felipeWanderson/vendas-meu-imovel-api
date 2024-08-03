@@ -47,10 +47,15 @@ export interface QueriesSales {
   manager?: string,
   property?: string,
 }
+
+interface FindyManyResponse {
+  sales: Sale[]
+  total: number
+}
 export interface SalesRepository {
   create(data: CreateSaleInput): Promise<Sale>
   findById(id: string): Promise<Sale | null>
-  findMany(query: QueriesSales, page: number): Promise<Sale[]>
+  findMany(query: QueriesSales, page: number): Promise<FindyManyResponse>
   update(id: string, data: Prisma.SaleUpdateInput): Promise<Sale>;
   delete(id: string, fall_motive: string): Promise<Sale>
 }

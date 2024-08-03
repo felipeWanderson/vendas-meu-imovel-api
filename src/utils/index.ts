@@ -22,6 +22,7 @@ export const formatPrismaPayloadCreateSale = (payload: PayloadCreateSale | Paylo
   return {
     ...payload,
     date_sale: format(parseISO(payload.date_sale), "yyyy-MM-dd'T'HH:mm:ssXXX"),
+    pay_date_act: payload.pay_date_act ? format(parseISO(String(payload.pay_date_act)), "yyyy-MM-dd'T'HH:mm:ssXXX") : undefined,
     act: convertToCents(payload.act),
     amount: convertToCents(payload.amount),
   }

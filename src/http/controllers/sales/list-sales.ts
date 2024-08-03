@@ -9,7 +9,7 @@ export async function listSales(request: FastifyRequest, reply: FastifyReply) {
   const queryParamsSchema = z.object({
     id: z.string().uuid().optional(),
     status: z.string().optional(),
-    realtor: z.string().uuid().optional(),
+    realtor: z.string().uuid().optional(),  
     manger: z.string().uuid().optional(),
     client: z.string().optional(),
     property: z.string().optional(),
@@ -31,14 +31,15 @@ export async function listSales(request: FastifyRequest, reply: FastifyReply) {
     const searchSalesUseCase = makeSearchSalesUseCase()
 
 
-    const {sales} = await searchSalesUseCase.execute({ page, query })
+    const {sales, total} = await searchSalesUseCase.execute({ page, query })
     
     const listSales = sales.map(sale => serializeSale(sale))
     
     return reply
       .status(200)
       .send({
-        sales: listSales
+        itens: listSales,
+        total
       })
   } catch (error) {
     throw error

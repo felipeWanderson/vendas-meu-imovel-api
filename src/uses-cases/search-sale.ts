@@ -8,6 +8,7 @@ interface SearchSalesUseCaseRequest {
 
 interface SearchSalesUseCaseResponse {
   sales: Sale[];
+  total: number
 }
 
 export class SearchSaleUseCase {
@@ -17,7 +18,7 @@ export class SearchSaleUseCase {
     query,
     page = 1,
   }: SearchSalesUseCaseRequest): Promise<SearchSalesUseCaseResponse> {
-    const sales = await this.salesRepository.findMany(query, page)
-    return { sales } 
+    const {sales, total} = await this.salesRepository.findMany(query, page)
+    return { sales, total} 
   }
 }

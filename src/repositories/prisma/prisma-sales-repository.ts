@@ -57,14 +57,31 @@ async findById(id: string) {
     whereMangerClause.id = manager
   }
 
+  const countSales = await prisma.sale.count({
+    where: whereClause,
+  })
 
   const sales = await prisma.sale.findMany({
     where: whereClause,
     include: {
       clients: {
-        where: whereClientClause
+        where: whereClientClause,
+        include: {
+          Client: true
+        }
       },
-      users: true,
+      users: {
+        include: {
+          User: {
+            select: {
+              id: true,
+              first_name: true,
+              last_name: true
+            }
+          }
+
+        }
+      },
       plant_property: { 
         include: {
           builder: true
@@ -74,8 +91,11 @@ async findById(id: string) {
     },
     take: 20,
     skip: (page - 1) * 20,
+    orderBy: {
+      date_sale: "desc"
+    }
   })
-    return sales;
+    return { sales, total: countSales };
   }
   async update(id: string, data: Prisma.SaleUpdateInput){
     return prisma.sale.update({

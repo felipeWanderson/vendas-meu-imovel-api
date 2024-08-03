@@ -22,9 +22,7 @@ export async function createClient(request: FastifyRequest, reply: FastifyReply)
     
     return reply
       .status(200)
-      .send({
-        client
-      })
+      .send(client)
   } catch (error) {
     if (error instanceof ClientAlreadyExistsError) {
       return reply.status(400).send({

@@ -37,10 +37,7 @@ export async function createSaleNew(request: FastifyRequest, reply: FastifyReply
 
     return reply
       .status(200)
-      .send({
-        sale: serializeSale(sale)
-
-      })
+      .send(serializeSale(sale))
   } catch (error) {
     throw error
   }

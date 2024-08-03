@@ -6,27 +6,29 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
 export async function updateUser(request: FastifyRequest, reply: FastifyReply) {
-  const updateUserParamsSchema = z.object({
-    id: z.string().uuid(),
-  })
-  const updateUserBodySchema = z.object({
-    first_name: z.string().optional(),
-    last_name: z.string().optional(),
-    password: z.string().min(6).optional(),
-    roles: z.string().array().optional(),
-    email: z.string().email().optional(),
-    is_ranking: z.boolean().optional(),
-    avatar_url: z.string().url().optional()
-  })
-
-  const body =
-  updateUserBodySchema.parse(request.body)
-  
-  const { id } = updateUserParamsSchema.parse(request.params)
   try {
+    const updateUserParamsSchema = z.object({
+      id: z.string().uuid(),
+    })
+    const updateUserBodySchema = z.object({
+      first_name: z.string().optional(),
+      last_name: z.string().optional(),
+      password: z.string().min(6).optional(),
+      roles: z.string().array().optional(),
+      email: z.string().email().optional(),
+      is_ranking: z.boolean().optional(),
+      avatar_url: z.string().url().optional()
+    })
+  
+    const body =
+    updateUserBodySchema.parse(request.body)
+    
+    const { id } = updateUserParamsSchema.parse(request.params)
     const updateUserUseCase = makeUpdateUserUseCase()
 
-    await updateUserUseCase.execute({id, data: {
+    console.log({body})
+
+    const updatedUser =await updateUserUseCase.execute({id, data: {
       email: body.email,
       first_name: body.first_name,
       last_name: body.last_name,
@@ -36,7 +38,7 @@ export async function updateUser(request: FastifyRequest, reply: FastifyReply) {
       avatar_url: body.avatar_url
     }})
 
-    return reply.status(204).send()
+    return reply.status(200).send(updatedUser)
   } catch (error) {
     if (error instanceof UserNotExistsError) {
       return reply.status(400).send({
