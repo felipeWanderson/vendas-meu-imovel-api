@@ -28,7 +28,7 @@ export interface UpdateSale {
   act?: number;
   pay_date_act?: string;
   fall_motive?: string;
-  plant_property_id?: string;
+  plant_property_id?: string | null;
   negotiation?: Prisma.InputJsonValue; // Add this line
   users?: User[];
   clients?: Client[];
@@ -42,7 +42,8 @@ export interface Sale extends SalePrisma {
 export interface QueriesSales {
   id?: string,
   status?: string,
-  realtor?: string,
+  seller?: string,
+  pickup?: string,
   client?: string,
   manager?: string,
   property?: string,
@@ -55,7 +56,7 @@ interface FindyManyResponse {
 export interface SalesRepository {
   create(data: CreateSaleInput): Promise<Sale>
   findById(id: string): Promise<Sale | null>
-  findMany(query: QueriesSales, page: number): Promise<FindyManyResponse>
+  findMany(query: QueriesSales, page: number, perPage: number): Promise<FindyManyResponse>
   update(id: string, data: Prisma.SaleUpdateInput): Promise<Sale>;
   delete(id: string, fall_motive: string): Promise<Sale>
 }

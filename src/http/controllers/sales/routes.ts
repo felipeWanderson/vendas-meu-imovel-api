@@ -14,7 +14,7 @@ export async function salesRoutes(app: FastifyInstance) {
   app.post('/sales/used', {onRequest: [verifyJwt]}, createSaleUsed)
   app.get('/sales', {onRequest: [verifyJwt]}, listSales)
   app.get('/sale/:id', {onRequest: [verifyJwt]}, getSaleById)
-  app.get('/validate-sale/:id', {onRequest: [verifyJwt]}, validateSale)
+  app.post('/validate-sale/:id', {onRequest: [verifyJwt]}, validateSale)
   app.put('/sale/:id', {onRequest: [verifyJwt]}, updateSale);
-  app.delete('/sale/:id', {onRequest: [verifyJwt]}, deleteSale);
+  app.patch('/sale/:id', {onRequest: [verifyJwt]}, deleteSale);
 }

@@ -9,29 +9,32 @@ export async function listSales(request: FastifyRequest, reply: FastifyReply) {
   const queryParamsSchema = z.object({
     id: z.string().uuid().optional(),
     status: z.string().optional(),
-    realtor: z.string().uuid().optional(),  
-    manger: z.string().uuid().optional(),
+    seller: z.string().uuid().optional(),  
+    pickup: z.string().uuid().optional(),  
+    manager: z.string().uuid().optional(),
     client: z.string().optional(),
     property: z.string().optional(),
     page: z.coerce.number().min(1).default(1),
+    perPage: z.coerce.number().min(1).default(10),
   })
 
   try {
-    const { page, id, status, realtor, manger, client, property} = queryParamsSchema.parse(request.query)
+    const { page, id, status, seller, pickup, manager, client, property, perPage} = queryParamsSchema.parse(request.query)
 
     const query = {
       id, 
       status, 
-      realtor, 
-      manger, 
+      seller,
+      pickup, 
+      manager, 
       client,
-      property
+      property,
     } as QueriesSales
 
     const searchSalesUseCase = makeSearchSalesUseCase()
 
 
-    const {sales, total} = await searchSalesUseCase.execute({ page, query })
+    const {sales, total} = await searchSalesUseCase.execute({ page, query, perPage })
     
     const listSales = sales.map(sale => serializeSale(sale))
     

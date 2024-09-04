@@ -4,6 +4,7 @@ import { Sale } from '@prisma/client'
 interface SearchSalesUseCaseRequest {
   query: QueriesSales
   page: number
+  perPage?: number
 }
 
 interface SearchSalesUseCaseResponse {
@@ -17,8 +18,9 @@ export class SearchSaleUseCase {
   async execute({
     query,
     page = 1,
+    perPage = 10
   }: SearchSalesUseCaseRequest): Promise<SearchSalesUseCaseResponse> {
-    const {sales, total} = await this.salesRepository.findMany(query, page)
+    const {sales, total} = await this.salesRepository.findMany(query, page, perPage)
     return { sales, total} 
   }
 }

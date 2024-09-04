@@ -1,4 +1,4 @@
-import { ClientSaleRole, UserSaleRole } from '@prisma/client'
+import { ClientSaleRole, StatusSale, UserSaleRole } from '@prisma/client'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 import { serializeSale } from '@/utils';
@@ -6,8 +6,9 @@ import { makeUpdateSaleUseCase } from '@/uses-cases/factories/sale/make-update-s
 import { SaleNotExistsError } from '@/uses-cases/errors/sales-not-exists';
 
 const updateSaleBodySchema = z.object({
+  status: z.enum([StatusSale.PROCESSING, StatusSale.CONCLUDED]).optional(),
   single_property: z.string().optional(),
-  plant_property_id: z.string().uuid().optional(),
+  plant_property_id: z.string().uuid().optional().nullable(),
   unity: z.string().optional(),
   amount: z.number().optional(),
   date_sale: z.string().optional(),
@@ -43,9 +44,7 @@ export async function updateSale(request: FastifyRequest, reply: FastifyReply) {
 
     return reply
       .status(200)
-      .send({
-        sale: serializeSale(sale)
-      })
+      .send(serializeSale(sale))
   } catch (error) {
     if (error instanceof SaleNotExistsError) {
       reply.status(400).send({ error: error.message });

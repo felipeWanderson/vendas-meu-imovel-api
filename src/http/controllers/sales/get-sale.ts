@@ -1,5 +1,6 @@
 import { SaleNotExistsError } from '@/uses-cases/errors/sales-not-exists'
 import { makeGetSaleByIdUseCase } from '@/uses-cases/factories/sale/make-get-sale-use-case'
+import { serializeSale } from '@/utils'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -16,9 +17,7 @@ export async function getSaleById(request: FastifyRequest, reply: FastifyReply) 
 
     return reply
       .status(200)
-      .send({
-        sale,
-      })
+      .send(serializeSale(sale))
   } catch (error) {
     if (error instanceof SaleNotExistsError) {
       reply.status(400).send({ error: error.message });
