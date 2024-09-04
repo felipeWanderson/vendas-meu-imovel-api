@@ -2,6 +2,7 @@ import { Prisma, Property } from '@prisma/client'
 
 export interface QueriesProperty {
   name?: string
+  active?: boolean
 }
 
 export interface PropertyAddress {
@@ -27,7 +28,7 @@ export interface CreateProperty extends  Prisma.PropertyUncheckedCreateInput {
 }
 export interface PropertyRepository {
   findById(id: string): Promise<Property | null>
-  findByName(email: string): Promise<Property | null>
+  findPropertyByBuilder(id: string): Promise<Property[] | null>
   findMany(query: QueriesProperty, page: number): Promise<Property[]>
   create(data: CreateProperty): Promise<Property>
   update(id: string, data: Prisma.PropertyUncheckedUpdateInput): Promise<Property>

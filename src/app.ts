@@ -1,11 +1,44 @@
 import fastify from 'fastify'
-import { appRoutes } from './http/routes'
 import { ZodError } from 'zod'
 import { env } from './env'
-
+import fastifyJwt from '@fastify/jwt'
+import fastifyCookie from '@fastify/cookie'
+import { userRoutes } from './http/controllers/users/routes'
+import { builderRoutes } from './http/controllers/builders/routes'
+import { EXPIRES_IN_ACCESS_TOKEN_IN_TEXT } from './constants'
+import { propertiesRoutes } from './http/controllers/properties/routes'
+import { salesRoutes } from './http/controllers/sales/routes'
+import { clientsRoutes } from './http/controllers/clients/routes'
+import fastifyCors from '@fastify/cors'
+import { rankingRoutes } from './http/controllers/ranking/routes'
+const EXPIRESIN_IN_MILLISECONDS = 1 * 60000 // 1 minute
 export const app = fastify()
 
-app.register(appRoutes)
+app.register(fastifyCors, {
+  origin: '*',
+  methods: ['GET', 'PUT', 'POST', 'PATCH','DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-skip-interceptor'],
+  credentials: true,
+  maxAge: 86400, 
+});
+
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+  cookie: {
+    cookieName: 'refreshToken',
+    signed: false,
+  },
+  sign: {
+    expiresIn: EXPIRES_IN_ACCESS_TOKEN_IN_TEXT,
+  },
+})
+app.register(fastifyCookie)
+app.register(userRoutes)
+app.register(builderRoutes)
+app.register(propertiesRoutes)
+app.register(salesRoutes)
+app.register(clientsRoutes)
+app.register(rankingRoutes)
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
