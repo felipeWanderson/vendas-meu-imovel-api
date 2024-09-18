@@ -11,11 +11,12 @@
     "bcryptjs": "2.4.3",
     "date-fns": "3.6.0",
     "dotenv": "16.4.5",
+    "exceljs": "4.4.0",
     "fastify": "4.27.0",
+    "tsup": "8.0.2",
     "vite-tsconfig-paths": "4.3.2",
     "vitest": "1.6.0",
-    "zod": "3.23.8",
-    "tsup": "8.0.2"
+    "zod": "3.23.8"
   },
   "scripts": {
     "start:dev": "tsx watch src/server.ts",

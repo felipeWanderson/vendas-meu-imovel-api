@@ -4,15 +4,24 @@ import {
   UserSaleRole,
   ClientSaleRole,
   StatusSale,
+  Client as ClientPrisma,
+  Property as PropertyPrisma,
+  User as UserPrisma,
+  Builder as BuilderPrisma
 } from '@prisma/client'
 
+export interface Property extends PropertyPrisma {
+  builder?: BuilderPrisma
+} 
 export interface User {
   role: UserSaleRole
   user_id: string
+  User?: UserPrisma
 }
 export interface Client {
   role: ClientSaleRole
   client_id: string
+  Client?: ClientPrisma
 }
 export interface CreateSaleInput extends Prisma.SaleUncheckedCreateInput {
   users?: Prisma.SaleUserCreateNestedManyWithoutSaleInput
@@ -29,7 +38,7 @@ export interface UpdateSale {
   pay_date_act?: string;
   fall_motive?: string;
   plant_property_id?: string | null;
-  negotiation?: Prisma.InputJsonValue; // Add this line
+  negotiation?: Prisma.InputJsonValue;
   users?: User[];
   clients?: Client[];
 }
@@ -37,6 +46,7 @@ export interface UpdateSale {
 export interface Sale extends SalePrisma {
   users?: User[]
   clients?: Client[]
+  plant_property?: Property
 }
 
 export interface QueriesSales {
@@ -57,6 +67,7 @@ export interface SalesRepository {
   create(data: CreateSaleInput): Promise<Sale>
   findById(id: string): Promise<Sale | null>
   findMany(query: QueriesSales, page: number, perPage: number): Promise<FindyManyResponse>
+  findAll(query: QueriesSales): Promise<FindyManyResponse>
   update(id: string, data: Prisma.SaleUpdateInput): Promise<Sale>;
   delete(id: string, fall_motive: string): Promise<Sale>
 }

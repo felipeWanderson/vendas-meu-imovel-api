@@ -7,6 +7,7 @@ import { updateSale } from "./update-sale";
 import { deleteSale } from "./delete-sale";
 import { getSaleById } from "./get-sale";
 import { validateSale } from "./validate-sale";
+import { reportSale } from "./report-sale";
 
 export async function salesRoutes(app: FastifyInstance) {
 
@@ -17,4 +18,5 @@ export async function salesRoutes(app: FastifyInstance) {
   app.post('/validate-sale/:id', {onRequest: [verifyJwt]}, validateSale)
   app.put('/sale/:id', {onRequest: [verifyJwt]}, updateSale);
   app.patch('/sale/:id', {onRequest: [verifyJwt]}, deleteSale);
+  app.get('/sale/report', reportSale);
 }
