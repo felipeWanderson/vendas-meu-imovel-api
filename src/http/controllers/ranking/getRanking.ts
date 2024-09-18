@@ -3,8 +3,8 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
 const querySchema = z.object({
-  month: z.number().min(1).max(12).optional(),
-  year: z.number().min(2000).max(new Date().getFullYear()).optional(),
+  month: z.coerce.number().min(1).max(12).optional(),
+  year: z.coerce.number().min(2000).optional(),
 });
 
 
