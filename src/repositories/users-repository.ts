@@ -1,4 +1,4 @@
-import { $Enums, Prisma, User } from '@prisma/client'
+import { $Enums, Prisma, User, UserRole } from '@prisma/client'
 
 export enum userRole {
   ADMIN = 'ADMIN',
@@ -15,12 +15,30 @@ export interface UpdatedUser {
   avatar_url?: string;
 }
 
+export interface QueriesUsers {
+  name?: string
+  role?: userRole
+  active?: boolean
+}
+
+interface FindyManyResponse {
+  users: {
+    id: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    roles: UserRole[];
+    avatar_url: string | null;
+    active: boolean;
+  }[]
+  total: number
+}
 
 export interface UsersRepository {
   findById(id: string): Promise<User | null>
   findManyByRole(role: userRole): Promise<User[] | null>
   findByEmail(email: string): Promise<User | null>
-  findMany(query: string, page: number): Promise<User[]>
+  findMany(query: QueriesUsers, page: number, perPage: number): Promise<FindyManyResponse>
   create(data: Prisma.UserCreateInput): Promise<User>
   update(id: string, data: Prisma.UserUpdateInput): Promise<UpdatedUser>
   delete(id: string): Promise<User>

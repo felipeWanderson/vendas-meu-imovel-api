@@ -26,8 +26,6 @@ export async function updateUser(request: FastifyRequest, reply: FastifyReply) {
     const { id } = updateUserParamsSchema.parse(request.params)
     const updateUserUseCase = makeUpdateUserUseCase()
 
-    console.log({body})
-
     const updatedUser =await updateUserUseCase.execute({id, data: {
       email: body.email,
       first_name: body.first_name,

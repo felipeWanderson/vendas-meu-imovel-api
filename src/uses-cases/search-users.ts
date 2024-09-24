@@ -1,13 +1,25 @@
-import { User } from '@prisma/client'
-import { UsersRepository } from '../repositories/users-repository'
+import { UserRole } from '@prisma/client'
+import { QueriesUsers, UsersRepository } from '../repositories/users-repository'
 
 interface SearchUseUseCaseRequest {
-  query: string
+  query: QueriesUsers
   page: number
+  perPage: number
+}
+
+interface User {
+  id: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    roles: UserRole[];
+    avatar_url: string | null;
+    active: boolean;
 }
 
 interface SearchUserUseCaseResponse {
   users: User[]
+  total: number
 }
 
 export class SearchUserUseCase {
@@ -16,9 +28,10 @@ export class SearchUserUseCase {
   async execute({
     query,
     page,
+    perPage
   }: SearchUseUseCaseRequest): Promise<SearchUserUseCaseResponse> {
-    const users = await this.usersRepository.findMany(query, page)
+    const {users, total} = await this.usersRepository.findMany(query, page, perPage)
 
-    return { users }
+    return { users, total }
   }
 }
